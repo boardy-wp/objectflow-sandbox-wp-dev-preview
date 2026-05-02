@@ -1,0 +1,6 @@
+.ofs-warning{background:#fff4e5;border-left:4px solid #dba617;padding:10px;margin:10px 0}
+.ofs-card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.ofs-card{background:#fff;border:1px solid #dcdcde;padding:12px}
+.ofs-badge{display:inline-block;background:#2271b1;color:#fff;border-radius:8px;padding:2px 8px}
+.ofs-muted{color:#646970}
+.ofs-node-card h3{margin-top:0}
