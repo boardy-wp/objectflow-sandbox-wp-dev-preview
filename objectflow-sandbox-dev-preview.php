@@ -19,19 +19,28 @@ function objectflow_sandbox_dev_preview_register_menu(): void
         __('ObjectFlow Sandbox DEV PREVIEW', 'objectflow-sandbox-dev-preview'),
         __('ObjectFlow', 'objectflow-sandbox-dev-preview'),
         'manage_options',
-        'objectflow-sandbox-dev-preview',
+        'objectflow-sandbox-dev-preview-demo',
         'objectflow_sandbox_dev_preview_render_page',
-        'dashicons-admin-generic',
+        'dashicons-networking',
         81
     );
 
     add_submenu_page(
-        'objectflow-sandbox-dev-preview',
+        'objectflow-sandbox-dev-preview-demo',
         __('ObjectFlow Demo', 'objectflow-sandbox-dev-preview'),
         __('Demo', 'objectflow-sandbox-dev-preview'),
         'manage_options',
-        'objectflow-sandbox-dev-preview',
+        'objectflow-sandbox-dev-preview-demo',
         'objectflow_sandbox_dev_preview_render_page'
+    );
+
+    add_submenu_page(
+        'objectflow-sandbox-dev-preview-demo',
+        __('Workflows', 'objectflow-sandbox-dev-preview'),
+        __('Workflows', 'objectflow-sandbox-dev-preview'),
+        'manage_options',
+        'objectflow-sandbox-dev-preview-workflows',
+        'objectflow_sandbox_dev_preview_render_workflows_page'
     );
 }
 
@@ -66,6 +75,20 @@ function objectflow_sandbox_dev_preview_render_page(): void
             <?php endforeach; ?>
             </tbody>
         </table>
+    </div>
+    <?php
+}
+
+
+function objectflow_sandbox_dev_preview_render_workflows_page(): void
+{
+    if (!current_user_can('manage_options')) {
+        return;
+    }
+    ?>
+    <div class="wrap"> 
+        <h1><?php echo esc_html__('Workflows', 'objectflow-sandbox-dev-preview'); ?></h1>
+        <p><?php echo esc_html__('Placeholder for future workflow listing/admin features.', 'objectflow-sandbox-dev-preview'); ?></p>
     </div>
     <?php
 }
