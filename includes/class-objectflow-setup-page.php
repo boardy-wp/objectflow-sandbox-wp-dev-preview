@@ -25,7 +25,7 @@ final class ObjectFlow_Setup_Page {
         )",
         'oflow_objectType' => "(
             ID BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-            name CHAR(256) NOT NULL,
+            name VARCHAR(256) NOT NULL,
             description TEXT NULL,
             PRIMARY KEY (ID)
         )",
@@ -34,7 +34,7 @@ final class ObjectFlow_Setup_Page {
             workflowID BIGINT UNSIGNED NOT NULL,
             objectID BIGINT UNSIGNED NOT NULL,
             stateID BIGINT UNSIGNED NOT NULL,
-            title CHAR(256) NOT NULL,
+            title VARCHAR(256) NOT NULL,
             deadline DATETIME NULL,
             createdDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
             createdUser BIGINT UNSIGNED NOT NULL,
@@ -43,14 +43,14 @@ final class ObjectFlow_Setup_Page {
         'oflow_state' => "(
             ID BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
             workflowID BIGINT UNSIGNED NOT NULL,
-            name CHAR(256) NOT NULL,
+            name VARCHAR(256) NOT NULL,
             description TEXT NULL,
             length INT NOT NULL,
             PRIMARY KEY (ID)
         )",
         'oflow_workflow' => "(
             ID BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-            name CHAR(256) NOT NULL,
+            name VARCHAR(256) NOT NULL,
             definition LONGTEXT NULL,
             PRIMARY KEY (ID)
         )",

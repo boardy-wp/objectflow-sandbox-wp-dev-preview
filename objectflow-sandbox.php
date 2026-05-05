@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
 
 
 if (!defined('OBJECTFLOW_SANDBOX_REVISION')) {
-    define('OBJECTFLOW_SANDBOX_REVISION', 3);
+    define('OBJECTFLOW_SANDBOX_REVISION', 4);
 }
 
 require_once plugin_dir_path(__FILE__) . 'includes/class-objectflow-setup-page.php';
