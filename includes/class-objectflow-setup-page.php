@@ -8,6 +8,11 @@ final class ObjectFlow_Setup_Page {
     private const NONCE_ACTION_CREATE = 'oflow_create_tables';
     private const NONCE_ACTION_REMOVE = 'oflow_remove_tables';
 
+    public function __construct() {
+        add_action('admin_post_oflow_create_tables', [$this, 'handle_create_tables']);
+        add_action('admin_post_oflow_remove_tables', [$this, 'handle_remove_tables']);
+    }
+
     /** @var string[] */
     private array $table_definitions = [
         'oflow_object' => "(
@@ -52,9 +57,6 @@ final class ObjectFlow_Setup_Page {
     ];
 
     public function register_admin_menu(): void {
-        add_action('admin_post_oflow_create_tables', [$this, 'handle_create_tables']);
-        add_action('admin_post_oflow_remove_tables', [$this, 'handle_remove_tables']);
-
         add_menu_page(
             __('ObjectFlow', 'objectflow-sandbox'),
             __('ObjectFlow', 'objectflow-sandbox'),

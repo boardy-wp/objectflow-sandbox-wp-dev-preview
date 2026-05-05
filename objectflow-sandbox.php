@@ -15,7 +15,10 @@ if (!defined('ABSPATH')) {
 require_once plugin_dir_path(__FILE__) . 'includes/class-objectflow-setup-page.php';
 
 final class ObjectFlow_Sandbox {
+    private ObjectFlow_Setup_Page $setup_page;
+
     public function __construct() {
+        $this->setup_page = new ObjectFlow_Setup_Page();
         add_action('plugins_loaded', [$this, 'load_textdomain']);
         add_action('admin_menu', [$this, 'register_admin_menu']);
     }
@@ -25,8 +28,7 @@ final class ObjectFlow_Sandbox {
     }
 
     public function register_admin_menu(): void {
-        $setup_page = new ObjectFlow_Setup_Page();
-        $setup_page->register_admin_menu();
+        $this->setup_page->register_admin_menu();
     }
 }
 
