@@ -102,7 +102,7 @@ final class ObjectFlow_Setup_Page {
         global $wpdb;
         $tables = $wpdb->get_col("SHOW TABLES LIKE 'oflow\\_%'");
 
-        return is_array($tables) ? array_values(array_filter($tables, fn($table) => str_starts_with($table, 'oflow_'))) : [];
+        return is_array($tables) ? array_values(array_filter($tables, fn($table) => $this->starts_with_oflow($table))) : [];
     }
 
     private function create_tables(): void {
@@ -126,7 +126,7 @@ final class ObjectFlow_Setup_Page {
         $allowed = array_keys($this->table_definitions);
 
         foreach ($existing as $table) {
-            if (!str_starts_with($table, 'oflow_')) {
+            if (!$this->starts_with_oflow($table)) {
                 continue;
             }
 
@@ -135,7 +135,7 @@ final class ObjectFlow_Setup_Page {
             }
 
             $safe_table = preg_replace('/[^a-zA-Z0-9_]/', '', $table);
-            if ($safe_table !== $table || !str_starts_with($safe_table, 'oflow_')) {
+            if ($safe_table !== $table || !$this->starts_with_oflow($safe_table)) {
                 continue;
             }
 
@@ -211,19 +211,27 @@ final class ObjectFlow_Setup_Page {
                     <?php echo esc_html__('remove tables', 'objectflow-sandbox'); ?>
                 </button>
             </form>
+            <p style="margin-top:20px;color:#646970;">
+                <?php echo esc_html__('Revision', 'objectflow-sandbox'); ?>: <?php echo esc_html((string) OBJECTFLOW_SANDBOX_REVISION); ?>
+            </p>
         </div>
         <?php
+    }
+
+
+    private function starts_with_oflow(string $table): bool {
+        return strpos($table, 'oflow_') === 0;
     }
 
     private function get_table_columns(string $table): array {
         global $wpdb;
 
-        if (!str_starts_with($table, 'oflow_')) {
+        if (!$this->starts_with_oflow($table)) {
             return [];
         }
 
         $safe_table = preg_replace('/[^a-zA-Z0-9_]/', '', $table);
-        if ($safe_table !== $table || !str_starts_with($safe_table, 'oflow_')) {
+        if ($safe_table !== $table || !$this->starts_with_oflow($safe_table)) {
             return [];
         }
 
