@@ -1,18 +1,10 @@
 <?php
-/**
- * Plugin Name: ObjectFlow Sandbox DEV PREVIEW
- * Description: Experimental ObjectFlow sandbox plugin for demo and discovery purposes.
- * Version: 0.1.0
- * Author: ObjectFlow
- * Text Domain: objectflow-sandbox-dev-preview
- * Domain Path: /languages
- */
 
 if (!defined('ABSPATH')) {
     exit;
 }
 
-final class ObjectFlow_Sandbox_DEV_Preview {
+final class ObjectFlow_Setup_Page {
     private const NONCE_ACTION_CREATE = 'oflow_create_tables';
     private const NONCE_ACTION_REMOVE = 'oflow_remove_tables';
 
@@ -59,21 +51,13 @@ final class ObjectFlow_Sandbox_DEV_Preview {
         )",
     ];
 
-    public function __construct() {
-        add_action('plugins_loaded', [$this, 'load_textdomain']);
-        add_action('admin_menu', [$this, 'register_admin_menu']);
+    public function register_admin_menu(): void {
         add_action('admin_post_oflow_create_tables', [$this, 'handle_create_tables']);
         add_action('admin_post_oflow_remove_tables', [$this, 'handle_remove_tables']);
-    }
 
-    public function load_textdomain(): void {
-        load_plugin_textdomain('objectflow-sandbox-dev-preview', false, dirname(plugin_basename(__FILE__)) . '/languages');
-    }
-
-    public function register_admin_menu(): void {
         add_menu_page(
-            __('ObjectFlow', 'objectflow-sandbox-dev-preview'),
-            __('ObjectFlow', 'objectflow-sandbox-dev-preview'),
+            __('ObjectFlow', 'objectflow-sandbox'),
+            __('ObjectFlow', 'objectflow-sandbox'),
             'manage_options',
             'objectflow-setup',
             [$this, 'render_setup_page'],
@@ -83,8 +67,8 @@ final class ObjectFlow_Sandbox_DEV_Preview {
 
         add_submenu_page(
             'objectflow-setup',
-            __('Setup', 'objectflow-sandbox-dev-preview'),
-            __('Setup', 'objectflow-sandbox-dev-preview'),
+            __('Setup', 'objectflow-sandbox'),
+            __('Setup', 'objectflow-sandbox'),
             'manage_options',
             'objectflow-setup',
             [$this, 'render_setup_page']
@@ -106,7 +90,7 @@ final class ObjectFlow_Sandbox_DEV_Preview {
 
     private function authorize_request(string $nonce_action): void {
         if (!current_user_can('manage_options')) {
-            wp_die(esc_html__('Unauthorized request.', 'objectflow-sandbox-dev-preview'));
+            wp_die(esc_html__('Unauthorized request.', 'objectflow-sandbox'));
         }
 
         check_admin_referer($nonce_action);
@@ -172,30 +156,30 @@ final class ObjectFlow_Sandbox_DEV_Preview {
 
     public function render_setup_page(): void {
         if (!current_user_can('manage_options')) {
-            wp_die(esc_html__('Unauthorized request.', 'objectflow-sandbox-dev-preview'));
+            wp_die(esc_html__('Unauthorized request.', 'objectflow-sandbox'));
         }
 
         $status = isset($_GET['oflow_status']) ? sanitize_text_field(wp_unslash($_GET['oflow_status'])) : '';
         $tables = $this->get_existing_oflow_tables();
         ?>
         <div class="wrap">
-            <h1><?php echo esc_html__('ObjectFlow Setup', 'objectflow-sandbox-dev-preview'); ?></h1>
+            <h1><?php echo esc_html__('ObjectFlow Setup', 'objectflow-sandbox'); ?></h1>
             <?php if ($status === 'created') : ?>
-                <div class="notice notice-success is-dismissible"><p><?php echo esc_html__('Tables created/regenerated successfully.', 'objectflow-sandbox-dev-preview'); ?></p></div>
+                <div class="notice notice-success is-dismissible"><p><?php echo esc_html__('Tables created/regenerated successfully.', 'objectflow-sandbox'); ?></p></div>
             <?php elseif ($status === 'removed') : ?>
-                <div class="notice notice-warning is-dismissible"><p><?php echo esc_html__('Tables removed successfully.', 'objectflow-sandbox-dev-preview'); ?></p></div>
+                <div class="notice notice-warning is-dismissible"><p><?php echo esc_html__('Tables removed successfully.', 'objectflow-sandbox'); ?></p></div>
             <?php endif; ?>
 
-            <h2><?php echo esc_html__('Database', 'objectflow-sandbox-dev-preview'); ?></h2>
+            <h2><?php echo esc_html__('Database', 'objectflow-sandbox'); ?></h2>
             <?php if (empty($tables)) : ?>
-                <p><?php echo esc_html__('No tables found.', 'objectflow-sandbox-dev-preview'); ?></p>
+                <p><?php echo esc_html__('No tables found.', 'objectflow-sandbox'); ?></p>
             <?php else : ?>
                 <?php foreach ($tables as $table) : ?>
                     <table class="widefat striped" style="max-width: 900px; margin-bottom: 18px;">
                         <thead>
                             <tr>
                                 <th><?php echo esc_html($table); ?></th>
-                                <th><?php echo esc_html__('Field / Type', 'objectflow-sandbox-dev-preview'); ?></th>
+                                <th><?php echo esc_html__('Field / Type', 'objectflow-sandbox'); ?></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -213,16 +197,16 @@ final class ObjectFlow_Sandbox_DEV_Preview {
             <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" style="display:inline-block; margin-right: 8px;">
                 <?php wp_nonce_field(self::NONCE_ACTION_CREATE); ?>
                 <input type="hidden" name="action" value="oflow_create_tables" />
-                <button type="submit" class="button button-primary" onclick="return confirm('<?php echo esc_js(__('Are you sure you want to recreate ObjectFlow tables?', 'objectflow-sandbox-dev-preview')); ?>');">
-                    <?php echo esc_html__('create tables', 'objectflow-sandbox-dev-preview'); ?>
+                <button type="submit" class="button button-primary" onclick="return confirm('<?php echo esc_js(__('Are you sure you want to recreate ObjectFlow tables?', 'objectflow-sandbox')); ?>');">
+                    <?php echo esc_html__('create tables', 'objectflow-sandbox'); ?>
                 </button>
             </form>
 
             <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" style="display:inline-block;">
                 <?php wp_nonce_field(self::NONCE_ACTION_REMOVE); ?>
                 <input type="hidden" name="action" value="oflow_remove_tables" />
-                <button type="submit" class="button" onclick="return confirm('<?php echo esc_js(__('Are you sure you want to remove ObjectFlow tables?', 'objectflow-sandbox-dev-preview')); ?>');">
-                    <?php echo esc_html__('remove tables', 'objectflow-sandbox-dev-preview'); ?>
+                <button type="submit" class="button" onclick="return confirm('<?php echo esc_js(__('Are you sure you want to remove ObjectFlow tables?', 'objectflow-sandbox')); ?>');">
+                    <?php echo esc_html__('remove tables', 'objectflow-sandbox'); ?>
                 </button>
             </form>
         </div>
@@ -246,5 +230,3 @@ final class ObjectFlow_Sandbox_DEV_Preview {
         return is_array($columns) ? $columns : [];
     }
 }
-
-new ObjectFlow_Sandbox_DEV_Preview();
