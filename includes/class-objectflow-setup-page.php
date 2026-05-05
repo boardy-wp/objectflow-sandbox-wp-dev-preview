@@ -44,8 +44,21 @@ final class ObjectFlow_Setup_Page {
             ID BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
             workflowID BIGINT UNSIGNED NOT NULL,
             name VARCHAR(256) NOT NULL,
+            title VARCHAR(256) NOT NULL,
             description TEXT NULL,
             length INT NOT NULL,
+            ini TEXT NULL,
+            form LONGTEXT NULL,
+            PRIMARY KEY (ID)
+        )",
+        'oflow_jump' => "(
+            ID BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+            stateFromID BIGINT UNSIGNED NOT NULL,
+            stateToID BIGINT UNSIGNED NOT NULL,
+            name VARCHAR(256) NOT NULL,
+            title VARCHAR(256) NOT NULL,
+            description LONGTEXT NULL,
+            function LONGTEXT NULL,
             PRIMARY KEY (ID)
         )",
         'oflow_workflow' => "(
