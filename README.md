@@ -1,7 +1,4 @@
-# objectflow-sandbox-wp-dev-preview
-Flow Sandbox DEVLOPER preview
+# ObjectFlow Sandbox DEV PREVIEW
 
-Not production ready
-Do not install on live websites
-No support
-No stable release
+⚠️ DEVELOPMENT PREVIEW ONLY  
+This repository contains an experimental WordPress plugin for demo and discovery purposes. It is not production-ready. Do not install it on public or production WordPress sites.
