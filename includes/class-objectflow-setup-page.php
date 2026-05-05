@@ -8,7 +8,10 @@ final class ObjectFlow_Setup_Page {
     private const NONCE_ACTION_CREATE = 'oflow_create_tables';
     private const NONCE_ACTION_REMOVE = 'oflow_remove_tables';
 
+    private ObjectFlow_Todo_List_Page $todo_list_page;
+
     public function __construct() {
+        $this->todo_list_page = new ObjectFlow_Todo_List_Page();
         add_action('admin_post_oflow_create_tables', [$this, 'handle_create_tables']);
         add_action('admin_post_oflow_remove_tables', [$this, 'handle_remove_tables']);
     }
@@ -43,6 +46,7 @@ final class ObjectFlow_Setup_Page {
         'oflow_state' => "(
             ID BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
             workflowID BIGINT UNSIGNED NOT NULL,
+            stateType INT NOT NULL,
             name VARCHAR(256) NOT NULL,
             title VARCHAR(256) NOT NULL,
             description TEXT NULL,
@@ -79,6 +83,8 @@ final class ObjectFlow_Setup_Page {
             'dashicons-admin-generic',
             58
         );
+
+        $this->todo_list_page->register_submenu('objectflow-setup');
 
         add_submenu_page(
             'objectflow-setup',

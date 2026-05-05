@@ -14,9 +14,10 @@ if (!defined('ABSPATH')) {
 
 
 if (!defined('OBJECTFLOW_SANDBOX_REVISION')) {
-    define('OBJECTFLOW_SANDBOX_REVISION', 5);
+    define('OBJECTFLOW_SANDBOX_REVISION', 6);
 }
 
+require_once plugin_dir_path(__FILE__) . 'includes/class-objectflow-todo-list-page.php';
 require_once plugin_dir_path(__FILE__) . 'includes/class-objectflow-setup-page.php';
 
 final class ObjectFlow_Sandbox {
